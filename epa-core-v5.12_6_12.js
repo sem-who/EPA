@@ -8,9 +8,20 @@ var epaCore = {
   //Bookmarklet popup
   postPopUp: function(url, name, params) { var win = window.open(url, name, params); }
 };
+
+
+
+	
+	
+	
 	// Start Google Analytics
 	
 	var _gaq = _gaq || [];
+
+
+
+ 
+
 
 // Use jQuery via jQuery(...); no conflict
 jQuery(document).ready(function() {
@@ -98,8 +109,8 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 	}
 	
-		/* UTMA Param */
-	
+	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
+
 	function getQuerystring(key, default_)
 {
   if (default_==null) default_="";
@@ -112,14 +123,14 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
     return qs[1];
 }	
 
-if(window.location.href.indexOf('utma') > 1){
-	passToGA = getQuerystring('utma');
+if(window.location.href.indexOf('__utma') > 1){
+	passToGA = getQuerystring('__utma').split('.')[1];
 }//if 
 else{
 	//nothing
 }//else
 
-/* End UTMA Param */
+/* END For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie  */
 	
 	
 	// Page Level Google Analytics Code
