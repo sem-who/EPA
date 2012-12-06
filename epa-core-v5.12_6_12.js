@@ -8,72 +8,158 @@ var epaCore = {
   //Bookmarklet popup
   postPopUp: function(url, name, params) { var win = window.open(url, name, params); }
 };
-
-/* 
-	 * Get Google Analytics Visitor Cookie
-	 * 
-	 */
+	// Start Google Analytics
 	
-	function getCookie(c_name)
-	{
-	var i,x,y,ARRcookies=document.cookie.split(";");
-	for (i=0;i<ARRcookies.length;i++)
-	  {
-	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-	  x=x.replace(/^\s+|\s+$/g,"");
-	  if (x==c_name)
-	    {
-	    return unescape(y);
-	    }
-	  }
-	}
-	
-	var cookieX=getCookie("__utma");
-	
-	if (cookieX!=null && cookieX!=""){
-	var split= cookieX.split(".");
-	var gaVisitorID= (split[1]);
-	var passToGA=gaVisitorID;
-	}
-	
-	else{
-	 passToGA="one and done visitor"
-	}
-
+	var _gaq = _gaq || [];
 
 // Use jQuery via jQuery(...); no conflict
 jQuery(document).ready(function() {
 
-var sem_hostName= window.location.hostname;
-var sem_hostArray= sem_hostName.split('.').slice(-2);
-var sem_hostDomain= sem_hostArray.join('.').toLowerCase();
+function loadtracking() {
+/* 
 
-// Google Analytics
-window._gaq = 
-[['_setAccount','UA-32633028-1'],
-['_trackPageview'],
-['_trackPageLoadTime'],
-['_setAllowLinker', true],
-['_setDomainName', sem_hostDomain],
-['_addIgnoredRef', sem_hostDomain],
-['_setCustomVar',1,'visitor id',passToGA,1]];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-g.src='https://www.google-analytics.com/ga.js';
-s.parentNode.insertBefore(g,s)}(document,'script'));
+	 * Get Root Domain- Used for Google Analytics _setDomainName & _addIgnoredRef
 
-/***jQuery GA Auto Tracking***/
+	 * 
+
+	 */
 
 
+
+var epaGA_hostName= window.location.hostname;
+
+var epaGA_hostArray= epaGA_hostName.split('.').slice(-2);
+
+var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
+
+
+
+
+
+ /* 
+
+	 * Get Google Analytics Visitor Cookie
+
+	 * 
+
+	 */
+
+	
+
+	function getCookie(c_name)
+
+	{
+
+	var i,x,y,ARRcookies=document.cookie.split(";");
+
+	for (i=0;i<ARRcookies.length;i++)
+
+	  {
+
+	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+
+	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+
+	  x=x.replace(/^\s+|\s+$/g,"");
+
+	  if (x==c_name)
+
+	    {
+
+	    return unescape(y);
+
+	    }
+
+	  }
+
+	}
+
+	
+
+	var cookieX=getCookie("__utma");
+
+	
+
+	if (cookieX!=null && cookieX!=""){
+
+	var split= cookieX.split(".");
+
+	var gaVisitorID= (split[1]);
+
+	var passToGA=gaVisitorID;
+
+	}
+
+	
+
+	else{
+
+	 passToGA="one and done visitor"
+
+	}
+	
+		/* UTMA Param */
+	
+	function getQuerystring(key, default_)
+{
+  if (default_==null) default_="";
+  key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+  var qs = regex.exec(window.location.href);
+  if(qs == null)
+    return default_;
+  else
+    return qs[1];
+}	
+
+if(window.location.href.indexOf('utma') > 1){
+	passToGA = getQuerystring('utma');
+}//if 
+else{
+	//nothing
+}//else
+
+/* End UTMA Param */
+	
+	
+	// Page Level Google Analytics Code
+ 
+ window._gaq.push(['_setAccount', 'UA-32633028-1']);
+ window._gaq.push(['_setDomainName', epaGA_hostDomain]);
+ window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
+ window._gaq.push(['_setAllowLinker', true]); 
+ window._gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
+ window._gaq.push(['_trackPageview']);
+ 
+  (function() {
+
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+ })();
+
+
+
+/************START Google Analytics jQuery Download & External Link & Mailto & Cross Domain Tracking******************/
+
+	//Specify Filetypes Tracked
         var filetypes = /\.(zip|exe|pdf|doc*|xls*|ppt*|mp3)$/i;
-		var domains = /\.(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|arinow.gov|relocatefeds.gov|lab21century.gov)/i;
-        var baseHref = '';
+		
+	//Specify Cross Domains Tracked
+		var domains = /\.(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
+        
+		var baseHref = '';
         if (jQuery('base').attr('href') != undefined)
             baseHref = jQuery('base').attr('href');
         jQuery('a').each(function() {
             var href = jQuery(this).attr('href');
+			
+	//Cross Domain Tracking
             
-			if (href && (href.match(domains)) && (href.indexOf(sem_hostDomain) == -1 )) {
+			if (href && (href.match(domains)) && (href.indexOf(epaGA_hostDomain) == -1 )) {
 			 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'crossDomain', 'Link Click', extLink]);
@@ -87,6 +173,8 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
                 });
 			}
                 
+		//Download Link Tracking
+		
           	else if (href && href.match(filetypes)) {
                 jQuery(this).click(function() {
                     var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
@@ -99,6 +187,8 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
                 });
             }
           
+		  //Mailto Link Tracking
+		  
             else if (href && href.match(/^mailto\:/i)) {
                 jQuery(this).click(function() {
                     var mailLink = href.replace(/^mailto\:/i, '');
@@ -107,7 +197,10 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
 					return false;
                 });
             }
-           else if (href && (href.match(/^https?\:/i)) && (href.indexOf(sem_hostDomain) == -1 )) {
+			
+			//External Link Tracking
+			
+           else if (href && (href.match(/^https?\:/i)) && (href.indexOf(epaGA_hostDomain) == -1 )) {
                 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'External', 'Link Click', extLink]);
@@ -119,6 +212,12 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
             }
         });
 
+/************START Google Analytics jQuery Download & External Link & Mailto & Cross Domain Tracking******************/
+	
+// End Google Analytics
+}
+
+loadtracking();
 
 
   //Load Notice Script
