@@ -209,9 +209,20 @@ addEvent(window, 'load', epaCore.notice); addEvent(window, 'load', epaCore.strip
 addEvent(window, 'load', epaCore.writePost);
 
 
-	/* 
+	
 
-	 * Get Root Domain- Used for GA _setDomainName & _addIgnoredRef
+
+
+// Start Google Analytics
+var _gaq = _gaq || [];
+
+function loadtracking() {
+
+
+
+/* 
+
+	 * Get Root Domain- Used for Google Analytics _setDomainName & _addIgnoredRef
 
 	 * 
 
@@ -219,11 +230,11 @@ addEvent(window, 'load', epaCore.writePost);
 
 
 
-var sem_hostName= window.location.hostname;
+var epaGA_hostName= window.location.hostname;
 
-var sem_hostArray= sem_hostName.split('.').slice(-2);
+var epaGA_hostArray= epaGA_hostName.split('.').slice(-2);
 
-var sem_hostDomain= sem_hostArray.join('.').toLowerCase();
+var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 
 
@@ -290,20 +301,62 @@ var sem_hostDomain= sem_hostArray.join('.').toLowerCase();
 	 passToGA="one and done visitor"
 
 	}
+	
+	/* UTMA Param */
+	
+	function getQuerystring(key, default_)
+{
+  if (default_==null) default_="";
+  key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+  var qs = regex.exec(window.location.href);
+  if(qs == null)
+    return default_;
+  else
+    return qs[1];
+}	
 
+if(window.location.href.indexOf('utma') > 1){
+	passToGA = getQuerystring('utma');
+}//if 
+else{
+	//nothing
+}//else
 
-/************START Download & Link & Mailto & Cross Domain Tracking******************/
+/* End UTMA Param */
+	
 
-//Helper function to safely attach to a link
+ // Page Level Google Analytics Code
+ 
+ window._gaq.push(['_setAccount', 'UA-32633028-1']);
+ window._gaq.push(['_setDomainName', epaGA_hostDomain]);
+ window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
+ window._gaq.push(['_setAllowLinker', true]); 
+ window._gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
+ window._gaq.push(['_trackPageview']);
 
-//Helper function to safely attach to a link
+ (function() {
+
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+ })();
+ 
+ /************START Google Analytics Download & External Link & Mailto & Cross Domain Tracking******************/
+
+ //Helper function to safely attach to a link
 
 function trackDownloads(){
 
 var myLinks = document.links;
 
+//Specify Filetypes Tracked
 var fileTypes = ['zip','exe','pdf','doc','xls','ppt','mp3','csv','docx','xlsx','pptx'];
 
+//Specify Cross Domains Tracked
 var crossDomains = ['epa.gov','epa-otis.gov','epa-echo.gov','energystar.gov','enviroflash.info','airnow.gov','urbanwaters.gov','relocatefeds.gov','lab21century.gov','supportportal.gov'];
 
 var theLink ='';
@@ -426,8 +479,8 @@ function track(type, theLink, val1, target){
 
 				for(c=0;c < crossDomains.length; c++){
 
-					if((myLinks[i].href.indexOf(crossDomains[c])) > -1 && (myLinks[i].href.indexOf(sem_hostDomain) == -1)){
-
+					if((myLinks[i].href.indexOf(crossDomains[c])) > -1 && (myLinks[i].href.indexOf(epaGA_hostDomain) == -1)){
+						_gaq.push(['_setAllowLinker', true]);
 							myLinks[i].onclick = function(){
 
 									_gaq.push(['_trackEvent', 'crossDomain', 'Link Click', this.href]);
@@ -458,7 +511,7 @@ function track(type, theLink, val1, target){
 
 				//External
 
-				if((crossDomain == false) && (myLinks[i].href.indexOf(sem_hostDomain) == -1)){
+				if((crossDomain == false) && (myLinks[i].href.indexOf(epaGA_hostDomain) == -1)){
 
 					theLink = myLinks[i]
 
@@ -484,35 +537,9 @@ function track(type, theLink, val1, target){
 
 addEvent(window, 'load', trackDownloads);
 
+ /************END Google Analytics Download & External Link & Mailto & Cross Domain Tracking******************/
 
-
-
-
-/*************END Download & Link & Mailto & Cross Domain Tracking********************/
-
-
-
-// Google Analytics
-
-function loadtracking() {
-	
-var _gaq = _gaq || [];
-window._gaq.push(['_setAccount', 'UA-32633028-1']);
-window._gaq.push(['_setDomainName', sem_hostDomain]);
-window._gaq.push(['_addIgnoredRef', sem_hostDomain]); 
-window._gaq.push(['_setAllowLinker', true]); 
-window._gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
-window._gaq.push(['_trackPageview']);
- (function() {
-
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-
- ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-
- })();
-
+// End Google Analytics
 }
 
 loadtracking();
