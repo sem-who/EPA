@@ -47,46 +47,66 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 
 
-/* 
- * Get Google Analytics Visitor Cookie
- * 
- */
+ /* 
 
-function getCookie(c_name)
-{
-var i,x,y,ARRcookies=document.cookie.split(";");
-for (i=0;i<ARRcookies.length;i++)
-  {
-  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-  x=x.replace(/^\s+|\s+$/g,"");
-  if (x==c_name)
-    {
-    return unescape(y);
-    }
-  }
-}
+	 * Get Google Analytics Visitor Cookie
 
+	 * 
 
+	 */
 
+	
 
-var epaGA_visitorIdCookie=getCookie("__utma");
+	function getCookie(c_name)
 
-if (epaGA_visitorIdCookie!=null && epaGA_visitorIdCookie!="")
-{
-var epaGA_visitorIDCookieSplit= epaGA_visitorIdCookie.split(".");
-var epaGA_gaVisitorID= (epaGA_visitorIDCookieSplit[1]);
+	{
 
-  }
+	var i,x,y,ARRcookies=document.cookie.split(";");
 
-else 
-  {
- epaGA_gaVisitorID="one and done visitor"
-   }
+	for (i=0;i<ARRcookies.length;i++)
 
+	  {
 
+	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
 
-<<<<<<< HEAD
+	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+
+	  x=x.replace(/^\s+|\s+$/g,"");
+
+	  if (x==c_name)
+
+	    {
+
+	    return unescape(y);
+
+	    }
+
+	  }
+
+	}
+
+	
+
+	var cookieX=getCookie("__utma");
+
+	
+
+	if (cookieX!=null && cookieX!=""){
+
+	var split= cookieX.split(".");
+
+	var gaVisitorID= (split[1]);
+
+	var passToGA=gaVisitorID;
+
+	}
+
+	
+
+	else{
+
+	 passToGA="one and done visitor"
+
 	}
 	
 	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
@@ -111,8 +131,6 @@ else{
 }//else
 
 /* END For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie  */
-=======
->>>>>>> GSA Code Additions
 	
 	
 	// Page Level Google Analytics Code
@@ -121,17 +139,8 @@ else{
  window._gaq.push(['_setDomainName', epaGA_hostDomain]);
  window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
  window._gaq.push(['_setAllowLinker', true]); 
- window._gaq.push(['_setCustomVar',12,'ga visitorid',epaGA_gaVisitorID,1]);
+ window._gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
  window._gaq.push(['_trackPageview']);
- 
- window._gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA
- window._gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
- window._gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
- window._gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
- window._gaq.push(['GSA._setCustomVar', 3, 'Agency', 'EPA', 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._setCustomVar', 4, 'Sub-Agency', 'EPA - ' + epaGA_hostName, 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._setCustomVar', 5, 'Code Ver', 'EPA 1.0 121211', 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._trackPageview']); // Parallel tracking to GSA
  
   (function() {
 
@@ -165,7 +174,6 @@ else{
 			 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'crossDomain', 'Link Click', extLink]);
-					_gaq.push(['GSA._trackEvent', 'crossDomain', 'Link Click', extLink]);  // Parallel tracking to GSA
 					_gaq.push(['_setAllowLinker', true]);
 					 if (this.target == '_blank') {
 										window.open(_gat._getTrackers()[0]._getLinkerUrl(this.href));
@@ -183,7 +191,6 @@ else{
                     var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
                     var filePath = href;
                     _gaq.push(['_trackEvent', 'Download',extension+ ' Click', filePath]);
-					_gaq.push(['GSA._trackEvent', 'Download',extension+ ' Click', filePath]);  // Parallel tracking to GSA
                     if (jQuery(this).attr('target').toLowerCase() != '_blank') {
                         setTimeout(function() { location.href = baseHref + href; }, 200);
                         return false;
@@ -197,7 +204,6 @@ else{
                 jQuery(this).click(function() {
                     var mailLink = href.replace(/^mailto\:/i, '');
                     _gaq.push(['_trackEvent', 'Email', 'Link Click', mailLink]);
-					_gaq.push(['GSA._trackEvent', 'Email', 'Link Click', mailLink]);   // Parallel tracking to GSA
 					setTimeout(function() { location.href = href; }, 200);
 					return false;
                 });
@@ -209,7 +215,6 @@ else{
                 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'External', 'Link Click', extLink]);
-					_gaq.push(['GSA._trackEvent', 'External', 'Link Click', extLink]);   // Parallel tracking to GSA
                     if (jQuery(this).attr('target') != undefined && jQuery(this).attr('target').toLowerCase() != '_blank') {
                         setTimeout(function() { location.href = href; }, 200);
                         return false;
