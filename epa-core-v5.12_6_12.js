@@ -47,7 +47,7 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 
 
-/* 
+ /* 
  * Get Google Analytics Visitor Cookie
  * 
  */
@@ -86,34 +86,7 @@ else
 
 
 
-<<<<<<< HEAD
-	}
-	
-	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
 
-	function getQuerystring(key, default_)
-{
-  if (default_==null) default_="";
-  key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
-  var qs = regex.exec(window.location.href);
-  if(qs == null)
-    return default_;
-  else
-    return qs[1];
-}	
-
-if(window.location.href.indexOf('__utma') > 1){
-	passToGA = getQuerystring('__utma').split('.')[1];
-}//if 
-else{
-	//nothing
-}//else
-
-/* END For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie  */
-=======
->>>>>>> GSA Code Additions
-	
 	
 	// Page Level Google Analytics Code
  
