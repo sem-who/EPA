@@ -60,27 +60,19 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 	
 
-	var cookieX=getCookie("__utma");
+var epaGA_visitorIdCookie=getCookie("__utma");
 
-	
+if (epaGA_visitorIdCookie!=null && epaGA_visitorIdCookie!="")
+{
+var epaGA_visitorIDCookieSplit= epaGA_visitorIdCookie.split(".");
+var epaGA_gaVisitorID= (epaGA_visitorIDCookieSplit[1]);
 
-	if (cookieX!=null && cookieX!=""){
+  }
 
-	var split= cookieX.split(".");
-
-	var gaVisitorID= (split[1]);
-
-	var passToGA=gaVisitorID;
-
-	}
-
-	
-
-	else{
-
-	 passToGA="one and done visitor"
-
-	}
+else 
+  {
+ epaGA_gaVisitorID="one and done visitor"
+   }
 
 	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
 
@@ -97,7 +89,7 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 }	
 
 if(window.location.href.indexOf('__utma') > 1){
-	passToGA = getQuerystring('__utma').split('.')[1];
+	epaGA_gaVisitorID = getQuerystring('__utma').split('.')[1];
 }//if 
 else{
 	//nothing
@@ -112,8 +104,19 @@ var _gaq = _gaq || [];
  _gaq.push(['_setDomainName', epaGA_hostDomain]);
  _gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
  _gaq.push(['_setAllowLinker', true]); 
- _gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
+ _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
  _gaq.push(['_trackPageview']);
+ 
+ _gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA 
+ _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
+ _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
+ _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
+ _gaq.push(['GSA._setCustomVar', 3, 'Agency', 'EPA', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 4, 'Sub-Agency', 'EPA - ' + epaGA_hostName, 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 5, 'Code Ver', 'EPA 1.0 121211', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._trackPageview']); // Parallel tracking to GSA
+
+ 
  (function() {
  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -158,14 +161,18 @@ function track(type, theLink, val1, target){
 		if(type == "Email"){
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 			_gaq.push(['_trackEvent', type, "Link Click", val1]);	
+			_gaq.push(['GSA._trackEvent', type, "Link Click", val1]);  // Parallel tracking to GSA	
 		}
 		else if(type == "Download"){
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 			_gaq.push(['_trackEvent', type, val1 + ' Click', theLink.href]);	
+			_gaq.push(['GSA._trackEvent', type, val1 + ' Click', theLink.href]);  // Parallel tracking to GSA
 		}
 		else if(type == "External" && document.location.hostname != theLink.hostname){
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 			_gaq.push(['_trackEvent', type, val1, theLink.href]);
+			_gaq.push(['GSA._trackEvent', type, val1, theLink.href]);// Parallel tracking to GSA	
+
 		}//close firstIf
 		else
 			window.open(theLink.href, target);
@@ -210,6 +217,7 @@ function track(type, theLink, val1, target){
 						_gaq.push(['_setAllowLinker', true]);
 							myLinks[i].onclick = function(){
 									_gaq.push(['_trackEvent', 'crossDomain', 'Link Click', this.href]);
+									_gaq.push(['GSA._trackEvent', 'crossDomain', 'Link Click', this.href]);  // Parallel tracking to GSA
 							       if (this.target == '_self' || this.target == '') {
 										_gaq.push(['_link', this.href]);
 									} else {
