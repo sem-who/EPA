@@ -84,7 +84,28 @@ else
  epaGA_gaVisitorID="one and done visitor"
    }
 
+	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
 
+	function getQuerystring(key, default_)
+{
+  if (default_==null) default_="";
+  key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+  var qs = regex.exec(window.location.href);
+  if(qs == null)
+    return default_;
+  else
+    return qs[1];
+}	
+
+if(window.location.href.indexOf('__utma') > 1){
+	passToGA = getQuerystring('__utma').split('.')[1];
+}//if 
+else{
+	//nothing
+}//else
+
+/* END For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie  */
 
 
 	
@@ -94,7 +115,7 @@ else
  window._gaq.push(['_setDomainName', epaGA_hostDomain]);
  window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
  window._gaq.push(['_setAllowLinker', true]); 
- window._gaq.push(['_setCustomVar',12,'ga visitorid',epaGA_gaVisitorID,1]);
+ window._gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
  window._gaq.push(['_trackPageview']);
  
  window._gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA
