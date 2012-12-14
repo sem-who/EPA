@@ -111,21 +111,21 @@ else{
 	
 	// Page Level Google Analytics Code
  
- window._gaq.push(['_setAccount', 'UA-32633028-1']);
- window._gaq.push(['_setDomainName', epaGA_hostDomain]);
- window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
- window._gaq.push(['_setAllowLinker', true]); 
- window._gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
- window._gaq.push(['_trackPageview']);
+ _gaq.push(['_setAccount', 'UA-32633028-1']);
+ _gaq.push(['_setDomainName', epaGA_hostDomain]);
+ _gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
+ _gaq.push(['_setAllowLinker', true]); 
+ _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
+ _gaq.push(['_trackPageview']);
  
- window._gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA
- window._gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
- window._gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
- window._gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
- window._gaq.push(['GSA._setCustomVar', 3, 'Agency', 'EPA', 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._setCustomVar', 4, 'Sub-Agency', 'EPA - ' + epaGA_hostName, 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._setCustomVar', 5, 'Code Ver', 'EPA 1.0 121211', 3]); // Page level variable sent only to GSA account
- window._gaq.push(['GSA._trackPageview']); // Parallel tracking to GSA
+ _gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA
+ _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
+ _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
+ _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
+ _gaq.push(['GSA._setCustomVar', 3, 'Agency', 'EPA', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 4, 'Sub-Agency', 'EPA - ' + epaGA_hostName, 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 5, 'Code Ver', 'EPA 1.0 121211', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._trackPageview']); // Parallel tracking to GSA
  
   (function() {
 
