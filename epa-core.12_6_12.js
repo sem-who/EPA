@@ -213,7 +213,7 @@ addEvent(window, 'load', epaCore.writePost);
 
 
 
-// Start Google Analytics
+// Start Google Analytics- 12-14-12
 var _gaq = _gaq || [];
 
 function loadtracking() {
@@ -241,66 +241,41 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 
 
  /* 
+ * Get Google Analytics Visitor Cookie
+ * 
+ */
 
-	 * Get Google Analytics Visitor Cookie
+function getCookie(c_name)
+{
+var i,x,y,ARRcookies=document.cookie.split(";");
+for (i=0;i<ARRcookies.length;i++)
+  {
+  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+  x=x.replace(/^\s+|\s+$/g,"");
+  if (x==c_name)
+    {
+    return unescape(y);
+    }
+  }
+}
 
-	 * 
 
-	 */
 
-	
 
-	function getCookie(c_name)
+var epaGA_visitorIdCookie=getCookie("__utma");
 
-	{
+if (epaGA_visitorIdCookie!=null && epaGA_visitorIdCookie!="")
+{
+var epaGA_visitorIDCookieSplit= epaGA_visitorIdCookie.split(".");
+var epaGA_gaVisitorID= (epaGA_visitorIDCookieSplit[1]);
 
-	var i,x,y,ARRcookies=document.cookie.split(";");
+  }
 
-	for (i=0;i<ARRcookies.length;i++)
-
-	  {
-
-	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-
-	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-
-	  x=x.replace(/^\s+|\s+$/g,"");
-
-	  if (x==c_name)
-
-	    {
-
-	    return unescape(y);
-
-	    }
-
-	  }
-
-	}
-
-	
-
-	var cookieX=getCookie("__utma");
-
-	
-
-	if (cookieX!=null && cookieX!=""){
-
-	var split= cookieX.split(".");
-
-	var gaVisitorID= (split[1]);
-
-	var passToGA=gaVisitorID;
-
-	}
-
-	
-
-	else{
-
-	 passToGA="one and done visitor"
-
-	}
+else 
+  {
+ epaGA_gaVisitorID="one and done visitor"
+   }
 
 	/* START For Cross Domain Tracking Use Visitor ID from __utma query param instead of cookie */
 
@@ -317,7 +292,7 @@ var epaGA_hostDomain= epaGA_hostArray.join('.').toLowerCase();
 }	
 
 if(window.location.href.indexOf('__utma') > 1){
-	passToGA = getQuerystring('__utma').split('.')[1];
+	epaGA_gaVisitorID = getQuerystring('__utma').split('.')[1];
 }//if 
 else{
 	//nothing
@@ -328,12 +303,21 @@ else{
 	
  // Page Level Google Analytics Code
  
- window._gaq.push(['_setAccount', 'UA-32633028-1']);
- window._gaq.push(['_setDomainName', epaGA_hostDomain]);
- window._gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
- window._gaq.push(['_setAllowLinker', true]); 
- window._gaq.push(['_setCustomVar',1,'visitor id',passToGA,1]);
- window._gaq.push(['_trackPageview']);
+ _gaq.push(['_setAccount', 'UA-32633028-1']);
+ _gaq.push(['_setDomainName', epaGA_hostDomain]);
+ _gaq.push(['_addIgnoredRef', epaGA_hostDomain]); 
+ _gaq.push(['_setAllowLinker', true]); 
+ _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
+ _gaq.push(['_trackPageview']);
+ 
+ _gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA 
+ _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
+ _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
+ _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
+ _gaq.push(['GSA._setCustomVar', 3, 'Agency', 'EPA', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 4, 'Sub-Agency', 'EPA - ' + epaGA_hostName, 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._setCustomVar', 5, 'Code Ver', 'EPA 1.0 121211', 3]); // Page level variable sent only to GSA account
+ _gaq.push(['GSA._trackPageview']); // Parallel tracking to GSA
 
  (function() {
 
@@ -384,6 +368,7 @@ function track(type, theLink, val1, target){
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 
 			_gaq.push(['_trackEvent', type, "Link Click", val1]);	
+			_gaq.push(['GSA._trackEvent', type, "Link Click", val1]);  // Parallel tracking to GSA	
 
 		}
 
@@ -391,7 +376,8 @@ function track(type, theLink, val1, target){
 
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 
-			_gaq.push(['_trackEvent', type, val1 + ' Click', theLink.href]);	
+			_gaq.push(['_trackEvent', type, val1 + ' Click', theLink.href]);
+			_gaq.push(['GSA._trackEvent', type, val1 + ' Click', theLink.href]);  // Parallel tracking to GSA	
 
 		}
 
@@ -400,6 +386,7 @@ function track(type, theLink, val1, target){
 			setTimeout("window.open('"+theLink.href+"','"+ target+"')", 200);
 
 			_gaq.push(['_trackEvent', type, val1, theLink.href]);
+			_gaq.push(['GSA._trackEvent', type, val1, theLink.href]);// Parallel tracking to GSA	
 
 		}//close firstIf
 
@@ -484,6 +471,7 @@ function track(type, theLink, val1, target){
 							myLinks[i].onclick = function(){
 
 									_gaq.push(['_trackEvent', 'crossDomain', 'Link Click', this.href]);
+									_gaq.push(['GSA._trackEvent', 'crossDomain', 'Link Click', this.href]);  // Parallel tracking to GSA
 
 							       if (this.target == '_self' || this.target == '') {
 
@@ -538,8 +526,8 @@ function track(type, theLink, val1, target){
 addEvent(window, 'load', trackDownloads);
 
  /************END Google Analytics Download & External Link & Mailto & Cross Domain Tracking******************/
-
 // End Google Analytics
+
 }
 
 loadtracking();
