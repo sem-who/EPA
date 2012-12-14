@@ -99,7 +99,7 @@ else
 }	
 
 if(window.location.href.indexOf('__utma') > 1){
-	passToGA = getQuerystring('__utma').split('.')[1];
+	epaGA_gaVisitorID = getQuerystring('__utma').split('.')[1];
 }//if 
 else{
 	//nothing
