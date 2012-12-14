@@ -14,7 +14,7 @@ var epaCore = {
 	
 	
 	
-	// Start Google Analytics
+	// Start Google Analytics- 12-14-12
 	
 	var _gaq = _gaq || [];
 
