@@ -147,15 +147,27 @@ var fileTypes = ['zip','exe','pdf','doc','xls','ppt','mp3','csv','docx','xlsx','
 
 //Specify Cross Domains Tracked
 var crossDomains = ['epa.gov','epa-otis.gov','epa-echo.gov','energystar.gov','enviroflash.info','airnow.gov','urbanwaters.gov','relocatefeds.gov','lab21century.gov','supportportal.gov'];
+var crossDomainExclude = ['http://oaspub.epa.gov/enviro/fii_query_dtl.disp_program_facility?p_registry_id=110000462936',
+'http://iaspub.epa.gov/enviro/tsca.get_chem_info?v_registry_id=110000462936',
+'http://iaspub.epa.gov/enviro/ICIS_DETAIL_REPORTS_NPDESID.icis_tst?npdesid=TX0091227&npvalue=1&npvalue=13&npvalue=14&npvalue=3&npvalue=4&npvalue=5&npvalue=6&rvalue=13&npvalue=2&npvalue=7&npvalue=8&npvalue=11&npvalue=12',
+'http://oaspub.epa.gov/enviro/tris_control.tris_print?tris_id=77507LBRZL12801'];
 
 var theLink ='';
 var theValue = '';
 var theType = '';
 var theTarget = '';
+var crossExclude;
 
 function track(type, theLink, val1, target){
 	if(target == ""){
 	  target = "_self";
+	}
+	for(var b=0;b < crossDomainExclude.length;b++) {
+	if(theLink.href != crossDomainExclude[b]){
+		crossExclude = true;
+	}//if theLink contains Exclude
+	else
+	crossExclude = false;
 	}
 	try{
 		if(type == "Email"){
@@ -213,7 +225,7 @@ function track(type, theLink, val1, target){
 				//Cross Domain
 				var crossDomain = false;
 				for(c=0;c < crossDomains.length; c++){
-					if((myLinks[i].href.indexOf(crossDomains[c])) > -1 && (myLinks[i].href.indexOf(epaGA_hostDomain) == -1)){
+					if((crossExclude && myLinks[i].href.indexOf(crossDomains[c])) > -1 && (myLinks[i].href.indexOf(epaGA_hostDomain) == -1)){
 						_gaq.push(['_setAllowLinker', true]);
 							myLinks[i].onclick = function(){
 									_gaq.push(['_trackEvent', 'crossDomain', 'Link Click', this.href]);
