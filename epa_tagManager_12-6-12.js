@@ -107,7 +107,7 @@ var _gaq = _gaq || [];
  _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
  _gaq.push(['_trackPageview']);
  
- _gaq.push(['GSA._setAccount', 'UA-32633028-5'']); // Parallel tracking to GSA UA-33523145-1
+ _gaq.push(['GSA._setAccount', 'UA-32633028-5']); // Parallel tracking to GSA UA-33523145-1
  _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
  _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
  _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
