@@ -107,7 +107,7 @@ var _gaq = _gaq || [];
  _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
  _gaq.push(['_trackPageview']);
  
- _gaq.push(['GSA._setAccount', 'UA-33523145-1']); // Parallel tracking to GSA 
+ _gaq.push(['GSA._setAccount', 'UA-32633028-5'']); // Parallel tracking to GSA UA-33523145-1
  _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
  _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
  _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
@@ -147,10 +147,10 @@ var fileTypes = ['zip','exe','pdf','doc','xls','ppt','mp3','csv','docx','xlsx','
 
 //Specify Cross Domains Tracked
 var crossDomains = ['epa.gov','epa-otis.gov','epa-echo.gov','energystar.gov','enviroflash.info','airnow.gov','urbanwaters.gov','relocatefeds.gov','lab21century.gov','supportportal.gov'];
-var crossDomainExclude = ['http://oaspub.epa.gov/enviro/fii_query_dtl.disp_program_facility?p_registry_id=110000462936',
-'http://iaspub.epa.gov/enviro/tsca.get_chem_info?v_registry_id=110000462936',
-'http://iaspub.epa.gov/enviro/ICIS_DETAIL_REPORTS_NPDESID.icis_tst?npdesid=TX0091227&npvalue=1&npvalue=13&npvalue=14&npvalue=3&npvalue=4&npvalue=5&npvalue=6&rvalue=13&npvalue=2&npvalue=7&npvalue=8&npvalue=11&npvalue=12',
-'http://oaspub.epa.gov/enviro/tris_control.tris_print?tris_id=77507LBRZL12801'];
+var crossDomainExclude = ['http://oaspub.epa.gov/enviro/fii_query_dtl.disp_program_facility',
+'http://iaspub.epa.gov/enviro/tsca.get_chem_info',
+'http://iaspub.epa.gov/enviro/ICIS_DETAIL_REPORTS_NPDESID.icis_tst',
+'http://oaspub.epa.gov/enviro/tris_control.tris_print'];
 
 var theLink ='';
 var theValue = '';
