@@ -150,7 +150,7 @@ var crossDomains = ['epa.gov','epa-otis.gov','epa-echo.gov','energystar.gov','en
 var crossDomainExclude = ['http://oaspub.epa.gov/enviro/fii_query_dtl.disp_program_facility',
 'http://iaspub.epa.gov/enviro/tsca.get_chem_info',
 'http://iaspub.epa.gov/enviro/ICIS_DETAIL_REPORTS_NPDESID.icis_tst',
-'http://oaspub.epa.gov/enviro/tris_control.tris_print'];
+'http://oaspub.epa.gov/enviro/tris_control.tris_print', 'http://yosemite.epa.gov/opa/admpress.nsf/'];
 
 var theLink ='';
 var theValue = '';
