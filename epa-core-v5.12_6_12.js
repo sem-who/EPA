@@ -145,7 +145,7 @@ else{
         var filetypes = /\.(zip|exe|pdf|doc*|xls*|ppt*|mp3)$/i;
 		
 	//Specify Cross Domains Tracked
-		var domains = /\.(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
+		var domains = /(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
         
 		var baseHref = '';
         if (jQuery('base').attr('href') != undefined)
