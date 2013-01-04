@@ -146,7 +146,13 @@ else{
 		
 	//Specify Cross Domains Tracked
 		var domains = /(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
+<<<<<<< HEAD
         
+=======
+		
+		var crossExclude = /(fii_query_dtl.disp_program_facility|tsca.get_chem_info|ICIS_DETAIL_REPORTS_NPDESID.icis_tst|tris_control.tris_print)/i;
+		
+>>>>>>> jQuery exclude update
 		var baseHref = '';
         if (jQuery('base').attr('href') != undefined)
             baseHref = jQuery('base').attr('href');
@@ -155,7 +161,7 @@ else{
 			
 	//Cross Domain Tracking
             
-			if (href && (href.match(domains)) && (href.indexOf(epaGA_hostDomain) == -1 )) {
+			if (href && (href.match(domains)) && (href.indexOf(epaGA_hostDomain) == -1 ) && (!href.match(crossExclude))) {
 			 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'crossDomain', 'Link Click', extLink]);
