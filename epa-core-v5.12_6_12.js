@@ -146,13 +146,9 @@ else{
 		
 	//Specify Cross Domains Tracked
 		var domains = /(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
-<<<<<<< HEAD
-        
-=======
 		
-		var crossExclude = /(fii_query_dtl.disp_program_facility|tsca.get_chem_info|ICIS_DETAIL_REPORTS_NPDESID.icis_tst|tris_control.tris_print)/i;
+		var crossExclude = /(fii_query_dtl.disp_program_facility|tsca.get_chem_info|ICIS_DETAIL_REPORTS_NPDESID.icis_tst|tris_control.tris_print|myenview2.html|em4ef.html|nepamap.aspx|cfpub.epa.gov|yosemite.epa.gov|iaspub.epa.gov|oaspub.epa.gov|ofmpub.epa.gov|watersgeo.epa.gov|cfpub2.epa.gov|cumulis.epa.gov|cfpub1.epa.gov|actor.epa.gov|nepis.epa.gov|yosemite1.epa.gov|ofmext.epa.gov|epamap32.epa.gov|gispub2.epa.gov|gispub6.epa.gov|epamap10.epa.gov|epamap21.epa.gov|maps6.epa.gov)/i;
 		
->>>>>>> jQuery exclude update
 		var baseHref = '';
         if (jQuery('base').attr('href') != undefined)
             baseHref = jQuery('base').attr('href');
