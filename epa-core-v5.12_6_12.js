@@ -146,7 +146,9 @@ else{
 		
 	//Specify Cross Domains Tracked
 		var domains = /(epa.gov|epa-otis.gov|epa-echo.gov|energystar.gov|enviroflash.info|airnow.gov|urbanwaters.gov|relocatefeds.gov|lab21century.gov|supportportal.gov)/i;
-        
+		
+		var crossExclude = /(http:\/\/oaspub.epa.gov\/enviro\/fii_query_dtl.disp_program_facility|http:\/\/iaspub.epa.gov\/enviro\/tsca.get_chem_info|http:\/\/iaspub.epa.gov\/enviro\/ICIS_DETAIL_REPORTS_NPDESID.icis_tst|http:\/\/oaspub.epa.gov\/enviro\/tris_control.tris_print|http:\/\/www.epa.gov\/myenv\/myenview2.html|http:\/\/www.epa.gov\/emefdata\/em4ef.html|http:\/\/nepassisttool.epa.gov\/nepassist\/nepamap.aspx|http:\/\/nepassist.epa.gov\/nepave\/nepamap.aspx|cfpub.epa.gov|yosemite.epa.gov|iaspub.epa.gov|oaspub.epa.gov|ofmpub.epa.gov|watersgeo.epa.gov|cfpub2.epa.gov|cumulis.epa.gov|cfpub1.epa.gov|actor.epa.gov|nepis.epa.gov|yosemite1.epa.gov|ofmext.epa.gov|epamap32.epa.gov|gispub2.epa.gov|gispub6.epa.gov|epamap10.epa.gov|epamap21.epa.gov|maps6.epa.gov)/i;
+		
 		var baseHref = '';
         if (jQuery('base').attr('href') != undefined)
             baseHref = jQuery('base').attr('href');
@@ -155,7 +157,7 @@ else{
 			
 	//Cross Domain Tracking
             
-			if (href && (href.match(domains)) && (href.indexOf(epaGA_hostDomain) == -1 )) {
+			if (href && (href.match(domains)) && (href.indexOf(epaGA_hostDomain) == -1 ) && (!href.match(crossExclude))) {
 			 jQuery(this).click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'crossDomain', 'Link Click', extLink]);
