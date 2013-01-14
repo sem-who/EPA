@@ -84,7 +84,7 @@ else{
  _gaq.push(['_setCustomVar',1,'visitor id',epaGA_gaVisitorID,1]);
 
 if(epaGA_hostDomain.indexOf("wcms.epa.gov") == -1 ){
- _gaq.push(['GSA._setAccount', 'UA-33523145-x']); // Parallel tracking to GSA
+ _gaq.push(['GSA._setAccount', 'UA-32633028-5']); // Parallel tracking to GSA
  _gaq.push(['GSA._setDomainName', epaGA_hostDomain]); // Parallel tracking to GSA
  _gaq.push(['GSA._addIgnoredRef', epaGA_hostDomain]);  // Parallel tracking to GSA
  _gaq.push(['GSA._setAllowLinker', true]);  // Parallel tracking to GSA - will use referring site's cookies sent in URL 
