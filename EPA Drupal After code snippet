@@ -44,7 +44,7 @@ jQuery(function() {
                     var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
                     var filePath = href;
                     _gaq.push(['_trackEvent', 'Download', extension + ' Click', filePath]);
-					if(epaGA_hostDomain.indexOf("wcms.epa.gov") == -1 ){
+					if(epaGA_hostName.indexOf("webcms.appdev.epa.gov") == -1 ){
                    _gaq.push(['GSA._trackEvent', 'Download', extension + ' Click', filePath]); // Parallel tracking to GSA
 					}
                     if (jQuery(this)
@@ -65,7 +65,7 @@ jQuery(function() {
                     .click(function() {
                     var mailLink = href.replace(/^mailto\:/i, '');
                     _gaq.push(['_trackEvent', 'Email', 'Link Click', mailLink]);
-					if(epaGA_hostDomain.indexOf("wcms.epa.gov") == -1 ){
+					if(epaGA_hostName.indexOf("webcms.appdev.epa.gov") == -1 ){
                     _gaq.push(['GSA._trackEvent', 'Email', 'Link Click', mailLink]); // Parallel tracking to GSA
 					}
                     setTimeout(function() {
@@ -82,7 +82,7 @@ jQuery(function() {
                     .click(function() {
                     var extLink = href.replace(/^https?\:\/\//i, '');
                     _gaq.push(['_trackEvent', 'External', 'Link Click', extLink]);
-					if(epaGA_hostDomain.indexOf("wcms.epa.gov") == -1 ){
+					if(epaGA_hostName.indexOf("webcms.appdev.epa.gov") == -1 ){
                     _gaq.push(['GSA._trackEvent', 'External', 'Link Click', extLink]); // Parallel tracking to GSA
 					}
                     if (jQuery(this)
